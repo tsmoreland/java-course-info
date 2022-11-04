@@ -1,7 +1,11 @@
 package ca.tsmoreland.courseinfo.cli;
 
+import ca.tsmoreland.courseinfo.cli.service.CourseRetrievalService;
+import ca.tsmoreland.courseinfo.cli.service.PluralsightCourse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class CourseRetriever {
 
@@ -23,5 +27,8 @@ public class CourseRetriever {
     private static void retrieveCourses(String authorId) {
         LOG.info("Retrieving courses for '{}'", authorId);
 
+        CourseRetrievalService service = new CourseRetrievalService();
+        List<PluralsightCourse> courses = service.getCoursesFor(authorId);
+        LOG.info("retrieved {} courses: {}", courses.size(), courses);
     }
 }
