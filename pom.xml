@@ -11,7 +11,8 @@
     <properties>
         <maven.compiler.release>17</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jackson.version>2.13.4.2</jackson.version>
+        <jackson.version>2.13.4</jackson.version>
+        <jackson.version.revision>2.13.4.2</jackson.version.revision>
     </properties>
 
     <dependencies>
@@ -29,7 +30,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
+            <version>${jackson.version.revision}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
