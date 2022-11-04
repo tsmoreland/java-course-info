@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CourseRetriever {
 
@@ -28,7 +29,10 @@ public class CourseRetriever {
         LOG.info("Retrieving courses for '{}'", authorId);
 
         CourseRetrievalService service = new CourseRetrievalService();
-        List<PluralsightCourse> courses = service.getCoursesFor(authorId);
+        List<PluralsightCourse> courses = service.getCoursesFor(authorId).
+            stream().
+            filter(c -> !c.isRetired()).
+            toList();
         LOG.info("retrieved {} courses: {}", courses.size(), courses);
     }
 }
