@@ -6,7 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.function.Predicate.not;
 
 public class CourseRetriever {
 
@@ -31,7 +32,7 @@ public class CourseRetriever {
         CourseRetrievalService service = new CourseRetrievalService();
         List<PluralsightCourse> courses = service.getCoursesFor(authorId).
             stream().
-            filter(c -> !c.isRetired()).
+            filter(not(PluralsightCourse::isRetired)).
             toList();
         LOG.info("retrieved {} courses: {}", courses.size(), courses);
     }
