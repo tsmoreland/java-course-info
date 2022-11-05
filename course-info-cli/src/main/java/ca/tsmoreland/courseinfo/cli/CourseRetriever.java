@@ -1,7 +1,9 @@
 package ca.tsmoreland.courseinfo.cli;
 
 import ca.tsmoreland.courseinfo.cli.service.CourseRetrievalService;
+import ca.tsmoreland.courseinfo.cli.service.CourseStorageService;
 import ca.tsmoreland.courseinfo.cli.service.PluralsightCourse;
+import ca.tsmoreland.courseinfo.repository.CourseRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,11 +31,14 @@ public class CourseRetriever {
     private static void retrieveCourses(String authorId) {
         LOG.info("Retrieving courses for '{}'", authorId);
 
-        CourseRetrievalService service = new CourseRetrievalService();
-        List<PluralsightCourse> courses = service.getCoursesFor(authorId).
+        var storageService = new CourseStorageService(CourseRepository.openCourseRepositoryFromFile("./courses.db"));
+        var retrievalService = new CourseRetrievalService();
+        List<PluralsightCourse> courses = retrievalService.getCoursesFor(authorId).
             stream().
             filter(not(PluralsightCourse::isRetired)).
             toList();
         LOG.info("retrieved {} courses: {}", courses.size(), courses);
+        storageService.storePluralsightCourses(courses);
+        LOG.info("Courses successfully stored.");
     }
 }
