@@ -1,6 +1,6 @@
 package ca.tsmoreland.courseinfo.repository;
 
-import ca.tsmoreland.ca.tsmoreland.courseinfo.domain.PluralsightCourse;
+import ca.tsmoreland.courseinfo.domain.PluralsightCourse;
 
 import java.util.List;
 
