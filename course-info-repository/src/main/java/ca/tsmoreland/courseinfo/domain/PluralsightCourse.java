@@ -1,4 +1,4 @@
-package ca.tsmoreland.ca.tsmoreland.courseinfo.domain;
+package ca.tsmoreland.courseinfo.domain;
 
 public record PluralsightCourse(String id, String name, long length, String url) {
 
