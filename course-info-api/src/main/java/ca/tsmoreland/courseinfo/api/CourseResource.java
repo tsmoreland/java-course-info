@@ -37,4 +37,20 @@ public class CourseResource {
         }
     }
 
+    @POST
+    @Path("/{id}/notes")
+    @Consumes(MediaType.TEXT_PLAIN)
+    public void addOrUpdateNotes(@PathParam("id") String id, String notes) {
+        try {
+            repository.addOrUpdateNotes(id, notes);
+        } catch (RepositoryException e) {
+
+            if (notes == null || notes.isBlank()) {
+                throw new BadRequestException("Invalid notes");
+            } else {
+                throw new NotFoundException();
+            }
+        }
+    }
+
 }
