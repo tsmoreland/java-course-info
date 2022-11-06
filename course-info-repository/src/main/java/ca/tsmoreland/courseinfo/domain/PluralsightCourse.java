@@ -1,11 +1,14 @@
 package ca.tsmoreland.courseinfo.domain;
 
-public record PluralsightCourse(String id, String name, long length, String url) {
+import java.util.Optional;
+
+public record PluralsightCourse(String id, String name, long length, String url, Optional<String> notes) {
 
     public PluralsightCourse {
         throwIfNullOrBlank(id);
         throwIfNullOrBlank(name);
         throwIfNullOrBlank(url);
+        notes.ifPresent(PluralsightCourse::throwIfNullOrBlank);
     }
 
     private static void throwIfNullOrBlank(String s) {

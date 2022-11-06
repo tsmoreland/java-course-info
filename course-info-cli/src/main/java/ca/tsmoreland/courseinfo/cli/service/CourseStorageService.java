@@ -4,6 +4,7 @@ import ca.tsmoreland.courseinfo.repository.CourseRepository;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Optional;
 
 public class CourseStorageService {
     private static final String PS_URL = "https://app.pluralsight.com%s";
@@ -25,7 +26,8 @@ public class CourseStorageService {
             source.id(),
             source.title(),
             source.parseDuration().orElse(Duration.ZERO).toSeconds(),
-            PS_URL.formatted(source.contentUrl())
+            PS_URL.formatted(source.contentUrl()),
+            Optional.empty()
         );
     }
 }

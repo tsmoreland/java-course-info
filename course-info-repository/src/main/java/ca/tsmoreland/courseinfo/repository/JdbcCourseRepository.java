@@ -8,6 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 class JdbcCourseRepository implements CourseRepository {
     private static final String H2_DATABASE_URL = "jdbc:h2:file:%s;AUTO_SERVER=TRUE;INIT=RUNSCRIPT FROM './db_init.sql'";
@@ -15,6 +16,7 @@ class JdbcCourseRepository implements CourseRepository {
         MERGE INTO Courses (id, name, length, url) 
         VALUES (?, ?, ?, ?)
         """;
+    private static final String ADD_NOTES = "UPDATE COURSES SET notes = ? WHERE id = ?";
     private final DataSource dataSource;
 
     public JdbcCourseRepository(String databaseFile) {
@@ -38,6 +40,18 @@ class JdbcCourseRepository implements CourseRepository {
     }
 
     @Override
+    public void addOrUpdateNotes(String id, String notes) {
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(INSERT_COURSE);
+            statement.setString(1, notes);
+            statement.setString(2, id);
+
+        } catch (SQLException e) {
+            throw new RepositoryException("Failed to add notes to " + id, e);
+        }
+    }
+
+    @Override
     public List<PluralsightCourse> getAllCourses() {
         try (Connection connection = dataSource.getConnection()) {
             Statement statement = connection.createStatement();
@@ -45,7 +59,13 @@ class JdbcCourseRepository implements CourseRepository {
 
             List<PluralsightCourse> courses = new ArrayList<>();
             while (results.next()) {
-                var course = new PluralsightCourse(results.getString(1), results.getString(2), results.getLong(3), results.getString((4)));
+                var course = new PluralsightCourse(
+                    results.getString(1),
+                    results.getString(2),
+                    results.getLong(3),
+                    results.getString(4),
+                    Optional.ofNullable(results.getString(5))
+                );
                 courses.add(course);
             }
             return Collections.unmodifiableList(courses);
