@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Path("/courses")
 public class CourseResource {
@@ -24,13 +25,12 @@ public class CourseResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<PluralsightCourse> getCourses() {
+    public Stream<PluralsightCourse> getCourses() {
         try {
             return repository.
                 getAllCourses().
                 stream().
-                sorted(Comparator.comparing(PluralsightCourse::name)).
-                toList();
+                sorted(Comparator.comparing(PluralsightCourse::name));
         } catch (RepositoryException e) {
             LOG.error("An error occurred retrieving courses ", e);
             throw new ServiceUnavailableException("Unexpected error occurred.");
