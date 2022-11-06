@@ -33,9 +33,8 @@ class PluralsightCourseTest {
     }
 
     @ParameterizedTest
-    @NullSource
     @ValueSource(strings = { "", " ", "\t"})
-    void constructorShouldThrowIllegalArgumentExceptionWhenNotesIsNullOrBlank(String value) {
-        assertThrows(IllegalArgumentException.class, () -> new PluralsightCourse("id", "name", 42, "/example", Optional.of(value)));
+    void constructorShouldThrowIllegalArgumentExceptionWhenNotesIsBlank(String value) {
+        assertThrows(IllegalArgumentException.class, () -> new PluralsightCourse("id", "name", 42, "/example", Optional.ofNullable(value)));
     }
 }
