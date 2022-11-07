@@ -26,3 +26,5 @@ hs_err_pid*
 target/
 
 /*.db
+
+dependency-reduced-pom.xml
