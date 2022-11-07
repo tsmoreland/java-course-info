@@ -1,4 +1,4 @@
-package ca.tsmoreland.ca.tsmoreland.courseinfo.domain;
+package ca.tsmoreland.courseinfo.domain;
 
 import ca.tsmoreland.courseinfo.domain.PluralsightCourse;
 import org.junit.jupiter.params.ParameterizedTest;
