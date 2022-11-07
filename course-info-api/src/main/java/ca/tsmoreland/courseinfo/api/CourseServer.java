@@ -7,10 +7,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URI;
+import java.util.logging.LogManager;
 
 public class CourseServer {
     private static final Logger LOG = LoggerFactory.getLogger(CourseServer.class);
     private static final String BASE_URI = "http://localhost:8888";
+
+    static {
+        LogManager.getLogManager().reset();
+        org.slf4j.bridge.SLF4JBridgeHandler.install();
+    }
 
     public static void main(String... args) {
         LOG.info("Starting server...");
